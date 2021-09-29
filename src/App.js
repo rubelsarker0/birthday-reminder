@@ -3,16 +3,18 @@ import List from './List';
 function App() {
 	const [birthdayPeople, setBirthdayPeople] = useState([]);
 
+	const getUser = async () => {
+		try {
+			const response = await fetch(`./data.json`);
+			const data = await response.json();
+			setBirthdayPeople(data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	useEffect(() => {
-		(async () => {
-			try {
-				const response = await fetch(`./data.json`);
-				const data = await response.json();
-				setBirthdayPeople(data);
-			} catch (error) {
-				console.error(error);
-			}
-		})();
+		getUser();
 	}, []);
 
 	const handleClearBtn = () => {
